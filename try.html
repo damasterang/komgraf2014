@@ -1,0 +1,28 @@
+<script>
+	var isChromium = window.chrome,
+	    vendorName = window.navigator.vendor;
+	if(isChromium !== null && isChromium !== undefined && vendorName === "Google Inc.") {
+	   console.log("chrome");
+	} else { 
+	   console.log("not chrome");
+	}
+</script>
+<script>
+
+	damas = dam();
+	console.log(damas.x);
+	console.log(damas.y);
+	
+	function dam(){
+
+		x = 1 + 1;
+		y = 2 + 2;
+
+		return {
+			x: x,
+			y: y
+		}
+
+	}
+
+</script>

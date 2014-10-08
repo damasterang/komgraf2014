@@ -1,0 +1,571 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="LiPo (Lines and Points)">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>LiPo (Lines and Points)</title>
+        <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <style type="text/css">
+	        #main{
+	        	margin: 20px auto;
+				width: 1233px;
+	        	font-family: "segoe ui";
+	        }
+			#canvasOh{
+				/*border: 1px solid black;*/
+				float: left;
+			}
+			#wrapper{
+				float: left;
+				margin-left: 20px;
+
+			}
+			td{
+				padding: 6px 10px;
+				/*text-align: center;*/
+			}
+			input[type="number"]{
+				/*float: left;*/
+				width: 110px;
+				height: 60px;
+				text-align: center;	
+				font-size: 30px;
+			}
+			button{
+				width: 100%;
+			}
+			#accordion{
+				width: 400px;
+				float: left;
+			}
+        </style>
+        <link rel="icon" type="image/png" href="img/icon.png" />
+    </head>
+    <body>
+        <div id="main">
+        	<canvas id="canvasOh" width="600" height="600"></canvas>
+        	<div id="wrapper">
+        		<table>
+        			<tr>
+        				<td>from X</td>
+        				<td><input class="form-control" type="number" id="fromX" min="-300" max="300" step="10" value="0"></td>
+        				<td id="danger1"></td>
+        			</tr>
+        			<tr>
+        				<td>from Y</td>
+        				<td><input class="form-control" type="number" id="fromY" min="-300" max="300" step="10" value="0"></td>
+        				<td id="danger2"></td>
+        			</tr>
+        			<tr>
+        				<td>to X</td>
+        				<td><input class="form-control" type="number" id="toX" min="-300" max="300" step="10" value="0"></td>
+        				<td id="danger3"></td>
+        			</tr>
+        			<tr>
+        				<td>to Y</td>
+        				<td><input class="form-control" type="number" id="toY" min="-300" max="300" step="10" value="0"></td>
+        				<td id="danger4"></td>
+        			</tr>
+	        		<tr>
+	        			<td colspan="2">
+	        				<button id="run" class="btn btn-primary btn-lg">Create Line</button>
+	        			</td>
+	        		</tr>
+	        		<tr>
+	        			<td>X</td>
+	        			<td><input class="form-control" type="number" id="xPoint" min="-300" max="300" step="10" value="0"></td>
+	        		</tr>
+	        		<tr>
+	        			<td>Y</td>
+	        			<td><input class="form-control" type="number" id="yPoint" min="-300" max="300" step="10" value="0"></td>
+	        		</tr>
+	        		<tr>
+	        			<td colspan="2">
+	        				<button id="runPoint" class="btn btn-primary btn-lg">Create Point</button>
+	        			</td>
+	        		</tr>
+	        		<tr>
+	        			<td colspan="2">
+	        				<button id="del" class="btn btn-danger btn-lg">Delete All</button>
+	        			</td>
+	        		</tr>
+        		</table>
+        	</div>
+        	<!-- <div class="panel-group" id="accordion">
+			  <div class="panel panel-default">
+			    <div class="panel-heading">
+			      <h4 class="panel-title">
+			        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+			          Create Lines and Points
+			        </a>
+			      </h4>
+			    </div>
+			    <div id="collapseOne" class="panel-collapse collapse in">
+			      <div class="panel-body">
+			        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+			      </div>
+			    </div>
+			  </div>
+			  <div class="panel panel-default">
+			    <div class="panel-heading">
+			      <h4 class="panel-title">
+			        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+			          Collapsible Group Item #2
+			        </a>
+			      </h4>
+			    </div>
+			    <div id="collapseTwo" class="panel-collapse collapse">
+			      <div class="panel-body">
+			        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+			      </div>
+			    </div>
+			  </div>
+			  <div class="panel panel-default">
+			    <div class="panel-heading">
+			      <h4 class="panel-title">
+			        <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+			          Us
+			        </a>
+			      </h4>
+			    </div>
+			    <div id="collapseThree" class="panel-collapse collapse">
+			      <div class="panel-body">
+			        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+			      </div>
+			    </div>
+			  </div>
+			</div> -->
+        </div>
+    </body>
+</html>
+<script type="text/javascript">
+	var canvasOh = document.getElementById('canvasOh');
+	var c = canvasOh.getContext("2d");
+
+	// c.fillStyle = "blue";
+	// c.fillRect(0,0,40,40);
+
+// x and y
+
+	c.beginPath();
+	c.moveTo(300,0);
+	c.lineTo(300,600);
+	c.stroke();
+
+	c.beginPath();
+	c.moveTo(0,300);
+	c.lineTo(600,300);
+	c.stroke();
+
+// grid
+
+	c.beginPath();
+	c.moveTo(0,30);
+	c.lineTo(600,30);
+	c.strokeStyle = "rgba(0,0,0,0.2)"
+	c.stroke();
+
+	c.beginPath();
+	c.moveTo(0,60);
+	c.lineTo(600,60);
+	c.strokeStyle = "rgba(0,0,0,0.2)"
+	c.stroke();
+
+	c.beginPath();
+	c.moveTo(0,90);
+	c.lineTo(600,90);
+	c.strokeStyle = "rgba(0,0,0,0.2)"
+	c.stroke();
+
+	c.beginPath();
+	c.moveTo(0,120);
+	c.lineTo(600,120);
+	c.strokeStyle = "rgba(0,0,0,0.2)"
+	c.stroke();
+
+	c.beginPath();
+	c.moveTo(0,150);
+	c.lineTo(600,150);
+	c.strokeStyle = "rgba(0,0,0,0.2)"
+	c.stroke();
+
+	c.beginPath();
+	c.moveTo(0,180);
+	c.lineTo(600,180);
+	c.strokeStyle = "rgba(0,0,0,0.2)"
+	c.stroke();
+
+	c.beginPath();
+	c.moveTo(0,210);
+	c.lineTo(600,210);
+	c.strokeStyle = "rgba(0,0,0,0.2)"
+	c.stroke();
+
+	c.beginPath();
+	c.moveTo(0,240);
+	c.lineTo(600,240);
+	c.strokeStyle = "rgba(0,0,0,0.2)"
+	c.stroke();
+
+	c.beginPath();
+	c.moveTo(0,270);
+	c.lineTo(600,270);
+	c.strokeStyle = "rgba(0,0,0,0.2)"
+	c.stroke();
+
+	c.beginPath();
+	c.moveTo(0,330);
+	c.lineTo(600,330);
+	c.strokeStyle = "rgba(0,0,0,0.2)"
+	c.stroke();
+
+	c.beginPath();
+	c.moveTo(0,360);
+	c.lineTo(600,360);
+	c.strokeStyle = "rgba(0,0,0,0.2)"
+	c.stroke();
+
+	c.beginPath();
+	c.moveTo(0,390);
+	c.lineTo(600,390);
+	c.strokeStyle = "rgba(0,0,0,0.2)"
+	c.stroke();
+
+	c.beginPath();
+	c.moveTo(0,420);
+	c.lineTo(600,420);
+	c.strokeStyle = "rgba(0,0,0,0.2)"
+	c.stroke();
+
+	c.beginPath();
+	c.moveTo(0,450);
+	c.lineTo(600,450);
+	c.strokeStyle = "rgba(0,0,0,0.2)"
+	c.stroke();
+
+	c.beginPath();
+	c.moveTo(0,480);
+	c.lineTo(600,480);
+	c.strokeStyle = "rgba(0,0,0,0.2)"
+	c.stroke();
+
+	c.beginPath();
+	c.moveTo(0,510);
+	c.lineTo(600,510);
+	c.strokeStyle = "rgba(0,0,0,0.2)"
+	c.stroke();
+
+	c.beginPath();
+	c.moveTo(0,540);
+	c.lineTo(600,540);
+	c.strokeStyle = "rgba(0,0,0,0.2)"
+	c.stroke();
+
+	c.beginPath();
+	c.moveTo(0,570);
+	c.lineTo(600,570);
+	c.strokeStyle = "rgba(0,0,0,0.2)"
+	c.stroke();
+
+	// grid level 2
+
+	c.beginPath();
+	c.moveTo(30,0);
+	c.lineTo(30,600);
+	c.strokeStyle = "rgba(0,0,0,0.2)"
+	c.stroke();
+
+	c.beginPath();
+	c.moveTo(60,0);
+	c.lineTo(60,600);
+	c.strokeStyle = "rgba(0,0,0,0.2)"
+	c.stroke();
+
+	c.beginPath();
+	c.moveTo(90,0);
+	c.lineTo(90,600);
+	c.strokeStyle = "rgba(0,0,0,0.2)"
+	c.stroke();
+
+	c.beginPath();
+	c.moveTo(120,0);
+	c.lineTo(120,600);
+	c.strokeStyle = "rgba(0,0,0,0.2)"
+	c.stroke();
+
+	c.beginPath();
+	c.moveTo(150,0);
+	c.lineTo(150,600);
+	c.strokeStyle = "rgba(0,0,0,0.2)"
+	c.stroke();
+
+	c.beginPath();
+	c.moveTo(180,0);
+	c.lineTo(180,600);
+	c.strokeStyle = "rgba(0,0,0,0.2)"
+	c.stroke();
+
+	c.beginPath();
+	c.moveTo(210,0);
+	c.lineTo(210,600);
+	c.strokeStyle = "rgba(0,0,0,0.2)"
+	c.stroke();
+
+	c.beginPath();
+	c.moveTo(240,0);
+	c.lineTo(240,600);
+	c.strokeStyle = "rgba(0,0,0,0.2)"
+	c.stroke();
+
+	c.beginPath();
+	c.moveTo(270,0);
+	c.lineTo(270,600);
+	c.strokeStyle = "rgba(0,0,0,0.2)"
+	c.stroke();
+
+	c.beginPath();
+	c.moveTo(330,0);
+	c.lineTo(330,600);
+	c.strokeStyle = "rgba(0,0,0,0.2)"
+	c.stroke();
+
+	c.beginPath();
+	c.moveTo(360,0);
+	c.lineTo(360,600);
+	c.strokeStyle = "rgba(0,0,0,0.2)"
+	c.stroke();
+
+	c.beginPath();
+	c.moveTo(390,0);
+	c.lineTo(390,600);
+	c.strokeStyle = "rgba(0,0,0,0.2)"
+	c.stroke();
+
+	c.beginPath();
+	c.moveTo(420,0);
+	c.lineTo(420,600);
+	c.strokeStyle = "rgba(0,0,0,0.2)"
+	c.stroke();
+
+	c.beginPath();
+	c.moveTo(450,0);
+	c.lineTo(450,600);
+	c.strokeStyle = "rgba(0,0,0,0.2)"
+	c.stroke();
+
+	c.beginPath();
+	c.moveTo(480,0);
+	c.lineTo(480,600);
+	c.strokeStyle = "rgba(0,0,0,0.2)"
+	c.stroke();
+
+	c.beginPath();
+	c.moveTo(510,0);
+	c.lineTo(510,600);
+	c.strokeStyle = "rgba(0,0,0,0.2)"
+	c.stroke();
+
+	c.beginPath();
+	c.moveTo(540,0);
+	c.lineTo(540,600);
+	c.strokeStyle = "rgba(0,0,0,0.2)"
+	c.stroke();
+
+	c.beginPath();
+	c.moveTo(570,0);
+	c.lineTo(570,600);
+	c.strokeStyle = "rgba(0,0,0,0.2)"
+	c.stroke();
+
+// arrrow
+
+	c.fillStyle = "black";
+	c.beginPath();
+	c.moveTo(0,300); //awal
+	c.lineTo(10,295); //kedua
+	c.lineTo(10,305); //ketiga
+	c.fill();
+	c.closePath();
+
+	c.beginPath();
+	c.moveTo(300,0); //awal
+	c.lineTo(305,10); //kedua
+	c.lineTo(295,10); //ketiga
+	c.fill()
+	c.closePath();
+
+	c.beginPath();
+	c.moveTo(600,300); //awal
+	c.lineTo(590,295); //kedua
+	c.lineTo(590,305); //ketiga
+	c.fill();
+	c.closePath();
+
+	c.beginPath();
+	c.moveTo(300,600); //awal
+	c.lineTo(305,590); //kedua
+	c.lineTo(295,590); //ketiga
+	c.fill()
+	c.closePath();
+
+	// c.beginPath();
+	// c.strokeStyle = "#00ffcc";	
+	// c.lineCap ="round";
+	// c.moveTo(300,60);
+	// c.lineTo(350, 200);
+	// c.lineWidth = 5;
+	// c.stroke();
+
+	// c.beginPath();
+	// c.arc(300,60,2,0,2*Math.PI);
+	// // c.fillStyle = "red";
+	// // c.fill();
+	// c.strokeStyle = "#00ffcc";
+	// c.stroke();
+
+	// c.beginPath();
+	// c.arc(350,200,2,0,2*Math.PI);
+	// // c.fillStyle = "red";
+	// // c.fill();
+	// c.strokeStyle = "#00ffcc";
+	// c.stroke();
+
+// x and y label
+
+	c.font="20px segoe-ui";
+	c.fontStyle = "italic";
+	c.fillStyle = "silver";
+	c.fillText("x",587,295);
+	c.fillText("y",305,15);
+	c.font = "15px sans-serif";
+	c.fillText("0",302,296);
+	// c.fill();
+
+	$('document').ready(function(){
+
+		$("#run").click(createLine);
+		$("#runPoint").click(createPoint);
+
+		$("#del").click(function(){
+			location.reload();
+		});
+
+		var fromX = parseInt($("#fromX").val());
+		var fromY = parseInt($("#fromY").val());
+		var toX = parseInt($("#toX").val());
+		var toY = parseInt($("#toY").val());
+
+		var danger = "<p class='bg-danger'>max 300 min -300</p>"
+
+		$("input").blur(function(){
+			if (fromX > 300 ) {
+				$("#danger1").html(danger);
+			};
+		})
+
+	})
+
+	var color = new Array(
+		"#832C65",
+		"#E1F416",
+		"#6BDC14",
+		"#0F9096",
+		"#C01283",
+		"#F92817"
+	);
+
+	var colorStatus = 0;
+
+	var margin = 300;
+	
+	function createLine(){
+
+		var fromX = parseInt($("#fromX").val());
+		var fromY = parseInt($("#fromY").val());
+		var toX = parseInt($("#toX").val());
+		var toY = parseInt($("#toY").val());
+
+		var canvasOh = document.getElementById('canvasOh');
+		var c = canvasOh.getContext("2d");
+
+		x1 = fromX + margin;
+		y1 = fromY + margin - (2 * fromY);
+		x2 = toX + margin;
+		y2 = toY + margin - (2 * toY);
+		// console.log(x1+" "+x2+" "+y1 +" "+ y2);
+
+		var text1 = "("+fromX+","+fromY+")";
+		var text2 = "("+toX+","+toY+")";
+
+		var canvasOh = document.getElementById('canvasOh');
+		var c = canvasOh.getContext("2d");
+
+		c.beginPath();
+		c.strokeStyle = color[colorStatus];	
+		c.lineCap ="round";
+		c.moveTo(x1, y1);
+		c.lineTo(x2, y2);
+		c.lineWidth = 4;
+		c.stroke();
+
+		c.font = "15px sans-serif";
+		c.fillStyle = "black";
+		c.fillText(text1,x1,y1-5);
+		c.fillText(text2,x2,y2+5);
+
+		c.beginPath();
+		c.arc(x1,y1,1,0,2*Math.PI);
+		// c.fillStyle = "red";
+		// c.fill();
+		c.strokeStyle = color[colorStatus];
+		c.stroke();
+
+		c.beginPath();
+		c.arc(x2,y2,1,0,2*Math.PI);
+		// c.fillStyle = "red";
+		// c.fill();
+		c.strokeStyle = color[colorStatus];
+		c.stroke();
+
+		colorStatus++;
+		if (colorStatus == color.length) colorStatus = 0;
+	}
+
+	function createPoint(){
+
+		var X = parseInt($("#xPoint").val());
+		var Y = parseInt($("#yPoint").val());
+
+		var canvasOh = document.getElementById('canvasOh');
+		var c = canvasOh.getContext("2d");
+
+		x = X + margin;
+		y = Y + margin - (2 * Y);
+		// console.log(x1+" "+x2+" "+y1 +" "+ y2);
+
+		var text = "("+X+","+Y+")";
+
+		var canvasOh = document.getElementById('canvasOh');
+		var c = canvasOh.getContext("2d");
+
+		c.font = "15px sans-serif";
+		c.fillStyle = "black";
+		c.fillText(text,x,y-5);
+
+		c.beginPath();
+		c.arc(x,y,2,0,2*Math.PI);
+		c.strokeStyle = color[colorStatus];
+		c.stroke();
+		c.fillStyle = color[colorStatus];
+		c.fill();
+		
+
+		colorStatus++;
+		if (colorStatus == color.length) colorStatus = 0;
+
+	}
+
+</script>

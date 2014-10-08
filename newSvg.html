@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" width="300px" height="200px">
+	<defs>
+		<marker id="mC2" markerWidth="5" markerHeight="5" refX="2.5" refY="2.5">
+			<circle cx="2.5" cy="2.5" r="2.5" fill="black"/>
+		</marker>
+		<marker id="mT2" markerWidth="20" markerHeight="10" refX="15" refY="5" orient="auto">
+			<path d="M0,0 L15,5 0,10 Z" style="fill:black"/>
+		</marker>
+	</defs>
+	<line x1="100" y1="20" x2="280" y2="100" stroke="black" marker-start="url(#mC2)" marker-end="url(#mT2)"/>
+</svg>
+
+<script>
+	
+	var arr = new Array("d","u","m");
+	console.log(arr);
+	arr.push("m");
+	console.log(arr);
+	arr = new Array();
+	console.log(arr);
+	arr.push("1","2");
+	console.log(arr[1]);
+
+</script>

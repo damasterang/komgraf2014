@@ -1,0 +1,360 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="Komputer Grafik">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Komputer Grafik</title>
+        <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/myJs.js"></script>
+		<script type="text/javascript" src="js/extraFunction.js"></script>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/myCss.css">
+        <link rel="icon" type="image/png" href="img/icon.png" />
+    </head>
+    <body>
+    	<div id="header">
+    		<div class="title">Komputer Grafik</div>
+    		<div class="menu">
+    			<a href="index.html" class="menuEl">
+    				<svg width='30' height='30'>
+					<circle r="10" cx="15" cy="15" fill="none" stroke="white" stroke-width="3"/>
+					<text x="15" y="15"
+						fill="white"
+						font-size="12px"
+						text-anchor="middle"
+						stroke-width="10"
+						font-weight="bold"
+						baseline-shift="-4px"
+					>1</text>
+				</svg>
+    			</a>
+    			<a href="second.html" class="menuEl activeMenu">
+    				<svg width='30' height='30'>
+					<circle r="13" cx="15" cy="15" fill="none" stroke="white" stroke-width="3"/>
+					<text x="15" y="15"
+						fill="white"
+						font-size="13px"
+						text-anchor="middle"
+						stroke-width="10"
+						font-weight="bold"
+						baseline-shift="-5px"
+					>2</text>
+				</svg>
+    			</a>
+    		</div>
+    	</div>
+        <div id="main">
+        	<svg id="svgBoard" xmlns="http:/www.w3.org/2000/svg" version="1.1" width="500px" height="500px">
+
+        		<defs fill="#3071a9"> 
+        			<marker id="mC2" markerWidth="2" markerHeight="2" refX="1" refY="1">
+        				<circle cx="1" cy="1" r="1"/>
+        			</marker>
+        			<marker id="mT2" markerWidth="10" markerHeight="5" refX="5" refY="2" orient="auto">
+        				<path d="M0,0 L5,2 0,4 Z"/>
+        			</marker>
+        		</defs>
+        		<defs fill="#a89e30"> 
+        			<marker id="mC3" markerWidth="2" markerHeight="2" refX="1" refY="1">
+        				<circle cx="1" cy="1" r="1"/>
+        			</marker>
+        			<marker id="mT3" markerWidth="10" markerHeight="5" refX="5" refY="2" orient="auto">
+        				<path d="M0,0 L5,2 0,4 Z"/>
+        			</marker>
+        		</defs>
+        		<defs fill="#7630a5"> 
+        			<marker id="mC4" markerWidth="2" markerHeight="2" refX="1" refY="1">
+        				<circle cx="1" cy="1" r="1"/>
+        			</marker>
+        			<marker id="mT4" markerWidth="10" markerHeight="5" refX="5" refY="2" orient="auto">
+        				<path d="M0,0 L5,2 0,4 Z"/>
+        			</marker>
+        		</defs>
+
+        		<g stroke='silver' stroke-width='1' font-size='7pt'>
+        			<!-- grid -->
+	        		<g id="grid"></g>
+	        		<g id="littleGrid"></g>
+	        		<g id="textCartesian"></g>
+	        	</g>
+
+        		<line x1='250' y1='0' x2='250' y2='500' stroke='black' stroke-width='2'/>
+        		<line x1='0' y1='250' x2='500' y2='250' stroke='black' stroke-width='2'/>
+
+        		<path d='M 0,250 L 10,245 10,255' stroke='black' fill='black' stroke-width='1'/>
+        		<path d='M 500,250 L 490,245 490,255' stroke='black' fill='black' stroke-width='1'/>
+        		<path d='M 250,0 L 255,10 245,10' stroke='black' fill='black' stroke-width='1'/>
+        		<path d='M 250,500 L 255,490 245,490' stroke='black' fill='black' stroke-width='1'/>
+
+        		<text class='textZoom' x='255' y='245' fill='silver' font-size='8pt'>0</text>
+        		<text class='textZoom' x='490' y='240' fill='silver' font-size='8pt'>x</text>
+        		<text class='textZoom' x='260' y='10' fill='silver' font-size='8pt'>y</text>
+
+        		<g id="contentLine" stroke='#3071a9' stroke-width='3'></g>
+        		<g id="contentText" fill="black"></g>
+
+        	</svg>
+
+        	<div id="wrapper">
+	        	<ul class="nav nav-tabs" id="myTab">
+				  <li class="active"><a href="#circleTab"><img class="tabImg" src="./img/circle.png"></a></li>
+				  <li><a href="#triangleTab"><img class="tabImg" src="./img/triangle.png"></a></li>
+				  <li><a href="#rectangleTab"><img class="tabImg" src="./img/rectangle.png"></a></li>
+				</ul>
+				 
+				<div class="tab-content">
+				  <div class="tab-pane active" id="circleTab">
+				  	<table>
+				  		<tr>
+		        			<td>C</td>
+		        			<td><input class="form-control circleInp" type="number" id="xCircle" min="-20" max="20" step="1" value="0">
+		        			<input class="form-control circleInp" type="number" id="yCircle" min="-20" max="20" step="1" value="0"></td>
+		        		</tr>
+		        		<tr>
+		        			<td>R</td>
+		        			<td><input class="form-control" type="number" id="rCircle" min="-20" max="20" step="1" value="4"></td>
+		        		</tr>
+		        		<tr>
+		        			<td colspan="2">
+		        				<button id="createCircle" class="btn btn-primary btn-lg">Create Circ</button>
+		        			</td>
+		        		</tr>
+				  	</table>
+				  </div>
+				  <div class="tab-pane" id="triangleTab">
+					<table>
+						<tr>
+		        			<td>P1</td>
+		        			<td><input class="form-control pTri" type="number" id="pXTri1" min="-20" max="20" step="1" value="2">
+		        			<input class="form-control pTri" type="number" id="pYTri1" min="-20" max="20" step="1" value="4"></td>
+		        		</tr>
+		        		<tr>
+		        			<td>P2</td>
+		        			<td><input class="form-control pTri" type="number" id="pXTri2" min="-20" max="20" step="1" value="6">
+		        			<input class="form-control pTri" type="number" id="pYTri2" min="-20" max="20" step="1" value="7"></td>
+		        		</tr>
+		        		<tr>
+		        			<td>P3</td>
+		        			<td><input class="form-control pTri" type="number" id="pXTri3" min="-20" max="20" step="1" value="9">
+		        			<input class="form-control pTri" type="number" id="pYTri3" min="-20" max="20" step="1" value="2"></td>
+		        		</tr>
+		        		<tr>
+		        			<td colspan="2">
+		        				<button id="createTriangle" class="btn btn-primary btn-lg greenBtn">Create Tria</button>
+		        				<!-- <button id="createCircle" class="btn btn-primary btn-lg darkYellowBtn triaCircle" onclick="createCircle()">Cr Circle</button> -->
+		        			</td>
+		        		</tr>
+					</table>
+				  </div>
+				  <div class="tab-pane" id="rectangleTab">
+					<table>
+						<tr>
+		        			<td>P1</td>
+		        			<td><input class="form-control pRect" type="number" id="pXRect2" min="-20" max="20" step="1" value="2">
+		        			<input class="form-control pRect" type="number" id="pYRect2" min="-20" max="20" step="1" value="7"></td>
+		        		</tr>
+		        		<tr>
+		        			<td>P2</td>
+		        			<td><input class="form-control pRect" type="number" id="pXRect3" min="-20" max="20" step="1" value="9">
+		        			<input class="form-control pRect" type="number" id="pYRect3" min="-20" max="20" step="1" value="7"></td>
+		        		</tr>
+		        		<tr>
+		        			<td>P3</td>
+		        			<td><input class="form-control pRect" type="number" id="pXRect4" min="-20" max="20" step="1" value="9">
+		        			<input class="form-control pRect" type="number" id="pYRect4" min="-20" max="20" step="1" value="3"></td>
+		        		</tr>
+		        		<tr>
+		        			<td>P4</td>
+		        			<td><input class="form-control pRect" type="number" id="pXRect1" min="-20" max="20" step="1" value="2">
+		        			<input class="form-control pRect" type="number" id="pYRect1" min="-20" max="20" step="1" value="3"></td>
+		        		</tr>
+		        		<tr>
+		        			<!-- <td colspan="2">
+		        				<button id="createRect" class="btn btn-primary btn-lg">Create Rect</button>
+		        			</td> -->
+		        			<td colspan="2">
+		        				<button id="createRectPoint" class="btn btn-primary btn-lg">Create Rect</button>
+		        			</td>
+		        		</tr>
+					</table>
+				  </div>
+				</div>
+				 
+				<script>
+				  	$(function () {
+				    	$('#myTab a:last').tab('show');
+				  	})
+				  	$('#myTab a').click(function (e) {
+				  		e.preventDefault()
+					  	$(this).tab('show')
+					})
+				</script>
+        		<table>
+        			<!-- <tr>
+	        			<td>X</td>
+	        			<td><input class="form-control" type="number" id="xTriangle" min="-20" max="20" step="1" value="0"></td>
+	        		</tr>
+	        		<tr>
+	        			<td>Y</td>
+	        			<td><input class="form-control" type="number" id="yTriangle" min="-20" max="20" step="1" value="0"></td>
+	        		</tr>
+	        		<tr>
+	        			<td>S/R</td>
+	        			<td><input class="form-control" type="number" id="sideTriangle" min="-20" max="20" step="1" value="4"></td>
+	        		</tr> -->
+	        		
+	        		<!-- <tr>
+	        			<td>X</td>
+	        			<td><input class="form-control" type="number" id="xRect" min="-20" max="20" step="1" value="0"></td>
+	        		</tr>
+	        		<tr>
+	        			<td>Y</td>
+	        			<td><input class="form-control" type="number" id="yRect" min="-20" max="20" step="1" value="0"></td>
+	        		</tr>
+	        		<tr>
+	        			<td>W</td>
+	        			<td><input class="form-control" type="number" id="widthRect" min="-20" max="20" step="1" value="6"></td>
+	        		</tr>
+	        		<tr>
+	        			<td>H</td>
+	        			<td><input class="form-control" type="number" id="heightRect" min="-20" max="20" step="1" value="4"></td>
+	        		</tr> -->
+	        		<tr>
+	        			<td colspan="2">
+	        				<button id="del" class="btn btn-danger btn-lg">Delete All</button>
+	        			</td>
+	        		</tr>
+        		</table>
+        	</div>
+
+        	<div class="panel-group" id="accordion">
+			  <div class="panel panel-default">
+			    <div class="panel-heading">
+			      <h4 class="panel-title">
+			        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+			          Element & Properties
+			        </a>
+			      </h4>
+			    </div>
+			    <div id="collapseOne" class="panel-collapse collapse in">
+			      <div id="pLinePoint" class="panel-body">
+			      	<!-- info -->
+			      	<div id="pLinePointStat"></div>
+			      	<div class="optionSide transformation rectT">
+			      		<table>
+			      			<tr>
+			      				<td><input id="xTranslate" type="number" class="form-control littleBox" min="-20" max="20" step="1" value="4" ></td>
+			      				<td>,</td>
+			      				<td><input id="yTranslate" type="number" class="form-control littleBox" min="-20" max="20" step="1" value="4" ></td>
+			      			</tr>
+			      		</table>
+			      		<button id="translate" class="btn btn-primary btn-lg padBtn littleBtn magentaBtn">Translate</button>
+			      	</div>
+			      	<div class="optionSide transformation rectT">
+			      		<table>
+			      			<tr>
+			      				<td><input id="scaleVal" type="number" class="form-control littleBox" min="0.5" max="10" step="0.5" value="2" ></td>
+			      				<td> <sub>x</sub></td>
+			      			</tr>
+			      		</table>
+			      		<button id="scale" class="btn btn-primary btn-lg padBtn littleBtn magentaBtn">Scale</button>
+			      	</div>
+			      	<div class="optionSide transformation rectT">
+			      		<table>
+			      			<tr>
+			      				<td><input id="shear" type="number" class="form-control littleBox" min="1" max="20" step="1" value="4" ></td>
+			      			</tr>
+			      		</table>
+				      	<button id="shearXBtn" class="shear btn btn-primary btn-lg padBtn littleBtn vLittleBtn magentaBtn" onclick="shearX()">Shear X</button>
+				      	<button id="shearYBtn" class="shear btn btn-primary btn-lg padBtn littleBtn vLittleBtn magentaBtn" onclick="shearY()">Shear Y</button>
+			      	</div>
+			      	<div class="optionSide transformation rectT">
+			      		<table>
+			      			<tr>
+			      				<td><input id="angleRect" type="number" class="form-control littleBox" min="0" max="360" step="30" value="30" ></td>
+			      				<td>&deg;</td>
+
+			      			</tr>
+			      		</table>
+				      	<button id="rotateRect" class="shear btn btn-primary btn-lg padBtn littleBtn magentaBtn">rotate</button>
+			      	</div>
+			      	<div class="optionSide transformation rectT">
+				      	<button id="mirrorX" class="shear btn btn-primary btn-lg padBtn littleBtn vLittleBtn mirrorPlus magentaBtn" onclick="mirrorX()">Mirror X</button>
+				      	<button id="mirrorY" class="shear btn btn-primary btn-lg padBtn littleBtn vLittleBtn mirrorPlus magentaBtn" onclick="mirrorY()">Mirror Y</button>
+				      	<button id="mirrorXY" class="shear btn btn-primary btn-lg padBtn littleBtn vLittleBtn mirrorPlus magentaBtn" onclick="mirrorXY()">Mirror XY</button>
+			      	</div>
+
+			      	<div class="optionSide transformation triangleT">
+			      		<table>
+			      			<tr>
+			      				<td><input id="xTranslateT" type="number" class="form-control littleBox" min="-20" max="20" step="1" value="4" ></td>
+			      				<td>,</td>
+			      				<td><input id="yTranslateT" type="number" class="form-control littleBox" min="-20" max="20" step="1" value="4" ></td>
+			      			</tr>
+			      		</table>
+			      		<button id="translateT" class="btn btn-primary btn-lg padBtn littleBtn magentaBtn">Translate</button>
+			      	</div>
+			      	<div class="optionSide transformation triangleT">
+			      		<table>
+			      			<tr>
+			      				<td><input id="scaleValT" type="number" class="form-control littleBox" min="0.5" max="10" step="0.5" value="2" ></td>
+			      				<td> <sub>x</sub></td>
+			      			</tr>
+			      		</table>
+			      		<button id="scaleT" class="btn btn-primary btn-lg padBtn littleBtn magentaBtn">Scale</button>
+			      	</div>
+			      	<div class="optionSide transformation triangleT">
+			      		<table>
+			      			<tr>
+			      				<td><input id="shearT" type="number" class="form-control littleBox" min="1" max="20" step="1" value="4" ></td>
+			      			</tr>
+			      		</table>
+				      	<button id="shearXTBtn" class="shear btn btn-primary btn-lg padBtn littleBtn vLittleBtn magentaBtn" onclick="shearX()">Shear X</button>
+				      	<button id="shearYTBtn" class="shear btn btn-primary btn-lg padBtn littleBtn vLittleBtn magentaBtn" onclick="shearY()">Shear Y</button>
+			      	</div>
+
+			      	<div class="optionSide transformation triangleT">
+			      		<table>
+			      			<tr>
+			      				<td><input id="angleT" type="number" class="form-control littleBox" min="0" max="360" step="30" value="30" ></td>
+			      				<td>&deg;</td>
+
+			      			</tr>
+			      		</table>
+				      	<button id="rotateT" class="shear btn btn-primary btn-lg padBtn littleBtn magentaBtn" onclick="rotateT()">rotate</button>
+			      	</div>
+			      	<div class="optionSide transformation triangleT">
+				      	<button id="mirrorXT" class="shear btn btn-primary btn-lg padBtn littleBtn vLittleBtn mirrorPlus magentaBtn" onclick="mirrorXT()">Mirror X</button>
+				      	<button id="mirrorYT" class="shear btn btn-primary btn-lg padBtn littleBtn vLittleBtn mirrorPlus magentaBtn" onclick="mirrorYT()">Mirror Y</button>
+				      	<button id="mirrorXYT" class="shear btn btn-primary btn-lg padBtn littleBtn vLittleBtn mirrorPlus magentaBtn" onclick="mirrorXYT()">Mirror XY</button>
+			      	</div>
+			      	<!-- <button id="additionVectorLine" class="lineMethod btn btn-primary btn-lg" onclick="additionVectorLine()">Addition</button>
+			      	<button id="subtractionVectorLine" class="lineMethod btn btn-primary btn-lg rightLine" onclick="subtractionVectorLine()">Subtraction</button>
+			      	<button id="dotPro" class="lineMethod btn btn-primary btn-lg" onclick="dotPro()">Dot Pro</button>
+			      	<button id="crossPro" class="lineMethod btn btn-primary btn-lg rightLine" onclick="crossPro()">Cross Pro</button> -->
+			      </div>
+			    </div>
+			  </div>
+			</div>
+
+			<div class="panel-group" id="accordion2">
+			  <div class="panel panel-default">
+			    <div class="panel-heading">
+			      <h4 class="panel-title">
+			        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+			          Status
+			        </a>
+			      </h4>
+			    </div>
+			    <div id="collapseTwo" class="panel-collapse collapse in">
+			      <div id="statusCal" class="panel-body">
+			      	<!-- status -->
+			      </div>
+			    </div>
+			  </div>
+			</div>
+        </div>
+    </body>
+</html>

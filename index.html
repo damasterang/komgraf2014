@@ -1,0 +1,213 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="description" content="Komputer Grafik">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Komputer Grafik</title>
+        <script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+		<script type="text/javascript" src="js/bootstrap.min.js"></script>
+		<script type="text/javascript" src="js/myJs.js"></script>
+		<script type="text/javascript" src="js/extraFunction.js"></script>
+        <link href="css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="css/myCss.css">
+        <link rel="icon" type="image/png" href="img/icon.png" />
+    </head>
+    <body>
+    	<div id="header">
+    		<div class="title">Komputer Grafik</div>
+    		<div class="menu">
+    			<a href="index.html" class="menuEl">
+				<svg width='30' height='30'>
+					<circle r="13" cx="15" cy="15" fill="none" stroke="white" stroke-width="3"/>
+					<text x="15" y="15"
+						fill="white"
+						font-size="13px"
+						text-anchor="middle"
+						stroke-width="10"
+						font-weight="bold"
+						baseline-shift="-5px"
+					>1</text>
+				</svg>
+    			</a>
+    			<a href="second.html" class="menuEl activeMenu">
+    				<svg width='30' height='30'>
+					<circle r="10" cx="15" cy="15" fill="none" stroke="white" stroke-width="3"/>
+					<text x="15" y="15"
+						fill="white"
+						font-size="12px"
+						text-anchor="middle"
+						stroke-width="10"
+						font-weight="bold"
+						baseline-shift="-4px"
+					>2</text>
+					</svg>
+    			</a>
+    		</div>
+    	</div>
+        <div id="main">
+        	<svg id="svgBoard" xmlns="http:/www.w3.org/2000/svg" version="1.1" width="500px" height="500px">
+
+        		<defs fill="#3071a9"> 
+        			<marker id="mC2" markerWidth="2" markerHeight="2" refX="1" refY="1">
+        				<circle cx="1" cy="1" r="1"/>
+        			</marker>
+        			<marker id="mT2" markerWidth="10" markerHeight="5" refX="5" refY="2" orient="auto">
+        				<path d="M0,0 L5,2 0,4 Z"/>
+        			</marker>
+        		</defs>
+        		<defs fill="#a89e30"> 
+        			<marker id="mC3" markerWidth="2" markerHeight="2" refX="1" refY="1">
+        				<circle cx="1" cy="1" r="1"/>
+        			</marker>
+        			<marker id="mT3" markerWidth="10" markerHeight="5" refX="5" refY="2" orient="auto">
+        				<path d="M0,0 L5,2 0,4 Z"/>
+        			</marker>
+        		</defs>
+        		<defs fill="#7630a5"> 
+        			<marker id="mC4" markerWidth="2" markerHeight="2" refX="1" refY="1">
+        				<circle cx="1" cy="1" r="1"/>
+        			</marker>
+        			<marker id="mT4" markerWidth="10" markerHeight="5" refX="5" refY="2" orient="auto">
+        				<path d="M0,0 L5,2 0,4 Z"/>
+        			</marker>
+        		</defs>
+
+        		<g stroke='silver' stroke-width='1' font-size='7pt'>
+        			<!-- grid -->
+	        		<g id="grid"></g>
+	        		<g id="littleGrid"></g>
+	        		<g id="textCartesian"></g>
+	        	</g>
+
+        		<line x1='250' y1='0' x2='250' y2='500' stroke='black' stroke-width='2'/>
+        		<line x1='0' y1='250' x2='500' y2='250' stroke='black' stroke-width='2'/>
+
+        		<path d='M 0,250 L 10,245 10,255' stroke='black' fill='black' stroke-width='1'/>
+        		<path d='M 500,250 L 490,245 490,255' stroke='black' fill='black' stroke-width='1'/>
+        		<path d='M 250,0 L 255,10 245,10' stroke='black' fill='black' stroke-width='1'/>
+        		<path d='M 250,500 L 255,490 245,490' stroke='black' fill='black' stroke-width='1'/>
+
+        		<text class='textZoom' x='255' y='245' fill='silver' font-size='8pt'>0</text>
+        		<text class='textZoom' x='490' y='240' fill='silver' font-size='8pt'>x</text>
+        		<text class='textZoom' x='260' y='10' fill='silver' font-size='8pt'>y</text>
+
+        		<g id="contentLine" stroke='#3071a9' stroke-width='3'></g>
+        		<g id="contentText" fill="black"></g>
+
+        	</svg>
+
+        	<div id="wrapper">
+        		<table>
+	        		<tr>
+	        			<td>X</td>
+	        			<td><input class="form-control" type="number" id="xPoint" min="-20" max="20" step="1" value="0"></td>
+	        		</tr>
+	        		<tr>
+	        			<td>Y</td>
+	        			<td><input class="form-control" type="number" id="yPoint" min="-20" max="20" step="1" value="0"></td>
+	        		</tr>
+	        		<tr>
+	        			<td colspan="2">
+	        				<button id="runPoint" class="btn btn-primary btn-lg greenBtn">Create Point</button>
+	        			</td>
+	        		</tr>
+        			<tr>
+        				<td>X<sub>1</sub></td>
+        				<td><input class="form-control" type="number" id="fromX" min="-20" max="20" step="1" value="0"></td>
+        			</tr>
+        			<tr>
+        				<td>Y<sub>1</sub></td>
+        				<td><input class="form-control" type="number" id="fromY" min="-20" max="20" step="1" value="0"></td>
+        			</tr>
+        			<tr>
+        				<td>X<sub>2</sub></td>
+        				<td><input class="form-control" type="number" id="toX" min="-20" max="20" step="1" value="0"></td>
+        			</tr>
+        			<tr>
+        				<td>Y<sub>2</sub></td>
+        				<td><input class="form-control" type="number" id="toY" min="-20" max="20" step="1" value="0"></td>
+        			</tr>
+	        		<tr>
+	        			<td colspan="2">
+	        				<button id="run" class="btn btn-primary btn-lg">Create Line</button>
+	        			</td>
+	        		</tr>
+	        		<tr>
+	        			<td colspan="2">
+	        				<button id="del" class="btn btn-danger btn-lg">Delete All</button>
+	        			</td>
+	        		</tr>
+        		</table>
+        	</div>
+
+        	<div class="panel-group" id="accordion">
+			  <div class="panel panel-default">
+			    <div class="panel-heading">
+			      <h4 class="panel-title">
+			        <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+			          Element & Properties
+			        </a>
+			      </h4>
+			    </div>
+			    <div id="collapseOne" class="panel-collapse collapse in">
+			      <div id="pLinePoint" class="panel-body">
+			      	<!-- info -->
+			      	<div id="pLinePointStat"></div>
+			      	<button id="getLine" class="getLine btn btn-primary btn-lg padBtn darkYellowBtn" onclick="lineFromPoint()">Get Line</button>
+			      	<button id="additionVectorLine" class="lineMethod btn btn-primary btn-lg padBtn magentaBtn" onclick="additionVectorLine()">Addition</button>
+			      	<button id="subtractionVectorLine" class="lineMethod btn btn-primary btn-lg rightLine padBtn magentaBtn" onclick="subtractionVectorLine()">Subtraction</button>
+			      	<button id="dotPro" class="lineMethod btn btn-primary btn-lg padBtn magentaBtn" onclick="dotPro()">Dot Pro</button>
+			      	<button id="crossPro" class="lineMethod btn btn-primary btn-lg rightLine padBtn magentaBtn" onclick="crossPro()">Cross Pro</button>
+			      </div>
+			    </div>
+			  </div>
+			  <!-- <div class="panel panel-default">
+			    <div class="panel-heading">
+			      <h4 class="panel-title">
+			        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+			          Collapsible Group Item #2
+			        </a>
+			      </h4>
+			    </div>
+			    <div id="collapseTwo" class="panel-collapse collapse">
+			      <div class="panel-body">
+			        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+			      </div>
+			    </div>
+			  </div>
+			  <div class="panel panel-default">
+			    <div class="panel-heading">
+			      <h4 class="panel-title">
+			        <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
+			          Us
+			        </a>
+			      </h4>
+			    </div>
+			    <div id="collapseThree" class="panel-collapse collapse">
+			      <div class="panel-body">
+			        Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
+			      </div>
+			    </div>
+			  </div> -->
+			</div>
+
+			<div class="panel-group" id="accordion2">
+			  <div class="panel panel-default">
+			    <div class="panel-heading">
+			      <h4 class="panel-title">
+			        <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
+			          Status
+			        </a>
+			      </h4>
+			    </div>
+			    <div id="collapseTwo" class="panel-collapse collapse in">
+			      <div id="statusCal" class="panel-body">
+			      	<!-- status -->
+			      </div>
+			    </div>
+			  </div>
+			</div>
+        </div>
+    </body>
+</html>
